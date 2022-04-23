@@ -26,11 +26,10 @@ class BudgetClass:
                 receiving_budget.balance += amount
 
 
-print('Welcome, please choose from the options below \n'
-      '1 - Create a new budget \n'
+print('This program allows you to manage funds between the budgets of food, clothing, entertainment, and travel.\n'
+      'Please choose from the options below \n'
+      '1 - Check available funds of each budget \n'
       '2 - Add funds to a budget \n'
       '3 - Remove funds from a budget \n'
-      '4 - Check available funds of a budget \n'
-      '5 - Remove funds from a budget \n'
-      '6 - View history of fund allocations\n'
-      '0 - Stop program\n')
+      '4 - View history of fund allocations\n'
+      '0 - Stop program')
