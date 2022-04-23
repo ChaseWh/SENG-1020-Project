@@ -36,13 +36,3 @@ print('Welcome, please choose from the options below \n'
       '5 - Remove funds from a budget \n'
       '6 - View history of fund allocations\n'
       '0 - Stop program\n')
-
-
-input1 = 'cars'
-food = BudgetClass('food')
-food.add_money(1000)
-ente = BudgetClass(input1)
-ente.add_money(400)
-print(ente.name)
-food.transfer_bal(200, ente)
-ente.display_bal()
