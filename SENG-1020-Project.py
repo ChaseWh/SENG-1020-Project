@@ -25,8 +25,6 @@ class BudgetClass:
                 self.balance -= amount
                 receiving_budget.balance += amount
 
-def create_budget(budget_name):
-    
 
 print('Welcome, please choose from the options below \n'
       '1 - Create a new budget \n'
