@@ -1,5 +1,6 @@
 import time
-
+from projlinkedlist import Node
+from projlinkedlist import LinkedList
 
 class BudgetClass:
     def __init__(self, name):
@@ -47,17 +48,20 @@ def add_funds():
                 budget.add_money(int(money_to_add))
             except ValueError:
                 return print("Not a valid dollar amount.")
+            history.append((Node('Added ${} to {};'.format(money_to_add, budget.name))))
             return print("Updated balance of {}: ${}".format(budget.name, budget.balance))
     print("Cannot find budget with that name!")
 
 
 def remove_funds():
     choice = input("Which budget would you like to deduct from?")
-    money_to_add = input("How much do you want to remove?")
+    money_to_remove = input("How much do you want to remove?")
     for budget in budgets:
         if budget.name == choice.lower():
             try:
-                budget.add_money(-int(money_to_add))
+                if budget.balance >= int(money_to_remove) and int(money_to_remove) > 0:
+                    history.append((Node('Removed ${} from {};'.format(money_to_remove, budget.name))))
+                budget.remove_money(int(money_to_remove))
             except ValueError:
                 return print("Not a valid dollar amount.")
             return print("Updated balance of {}: ${}".format(budget.name, budget.balance))
@@ -72,6 +76,8 @@ def transfer_funds():
             for j in budgets:
                 if j.name == to_budget.lower():
                     try:
+                        if i.balance >= int(money_to_transfer) and int(money_to_transfer) > 0:
+                            history.append((Node('Moved ${} from {} to {};'.format(money_to_transfer, i.name, j.name))))
                         i.transfer_bal(int(money_to_transfer), j)
                     except ValueError:
                         print("Not a valid dollar amount.")
@@ -85,6 +91,8 @@ budgets = []
 food_budget = BudgetClass("food")
 clothing_budget = BudgetClass("clothes")
 entertainment = BudgetClass("entertainment")
+
+history = LinkedList()
 
 user_input = input(
     'This program allows you to manage funds between the budgets of food, clothing, and entertainment.\n'
@@ -111,8 +119,13 @@ while user_input != "0":
         print("=-=-=Budgets=-=-=")
         for budget in budgets:
             print(budget.name)
-    if user_input == "5":
-        print("TODO view history")
+    if user_input == "6":
+        node = history.head
+        print('=-=-=History of Fund Allocations=-=-=')
+        while node != None:
+            print(node.data, end=' ')
+            node = node.next
+        print()
 
     # wait then ask for input again
     time.sleep(2)
