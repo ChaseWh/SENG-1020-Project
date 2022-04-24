@@ -8,7 +8,7 @@ class BudgetClass:
         budgets.append(self)
 
     def add_money(self, money):
-        self.balance = money
+        self.balance += money
 
     def remove_money(self, money):
         if self.balance >= money:
@@ -33,7 +33,7 @@ class BudgetClass:
 def check_funds():
     choice = input("Which budget would you like to check?")
     for budget in budgets:
-        if budget.name == choice:
+        if budget.name == choice.lower():
             return print("{}: ${}".format(budget.name, budget.balance))
     print("Cannot find budget with that name!")
 
@@ -42,8 +42,11 @@ def add_funds():
     choice = input("Which budget would you like to add to?")
     money_to_add = input("How much do you want to add?")
     for budget in budgets:
-        if budget.name == choice:
-            budget.add_money(int(money_to_add))
+        if budget.name == choice.lower():
+            try:
+                budget.add_money(int(money_to_add))
+            except ValueError:
+                return print("Not a valid dollar amount.")
             return print("Updated balance of {}: ${}".format(budget.name, budget.balance))
     print("Cannot find budget with that name!")
 
@@ -52,9 +55,26 @@ def remove_funds():
     choice = input("Which budget would you like to deduct from?")
     money_to_add = input("How much do you want to remove?")
     for budget in budgets:
-        if budget.name == choice:
-            budget.add_money(-int(money_to_add))
+        if budget.name == choice.lower():
+            try:
+                budget.add_money(-int(money_to_add))
+            except ValueError:
+                return print("Not a valid dollar amount.")
             return print("Updated balance of {}: ${}".format(budget.name, budget.balance))
+    print("Cannot find budget with that name!")
+
+def transfer_funds():
+    from_budget = input("Which budget would you like to take funds from?")
+    to_budget = input("Which budget would you like to transfer funds to?")
+    money_to_transfer = input("How much do you want to transfer?")
+    for i in budgets:
+        if i.name == from_budget.lower():
+            for j in budgets:
+                if j.name == to_budget.lower():
+                    try:
+                        i.transfer_bal(int(money_to_transfer), j)
+                    except ValueError:
+                        print("Not a valid dollar amount.")
     print("Cannot find budget with that name!")
 
 
@@ -65,13 +85,14 @@ clothing_budget = BudgetClass("clothes")
 entertainment = BudgetClass("entertainment")
 
 user_input = input(
-    'This program allows you to manage funds between the budgets of food, clothing, entertainment, and travel.\n'
+    'This program allows you to manage funds between the budgets of food, clothing, and entertainment.\n'
     'Please choose from the options below \n'
     '1 - Check available funds of each budget \n'
     '2 - Add funds to a budget \n'
     '3 - Remove funds from a budget \n'
-    '4 - List budgets \n'
-    '5 - View history of fund allocations\n'
+    '4 - Transfer funds between budgets \n'
+    '5 - List budgets \n'
+    '6 - View history of fund allocations\n'
     '0 - Stop program')
 
 # wait for input
@@ -83,6 +104,8 @@ while user_input != "0":
     if user_input == "3":
         remove_funds()
     if user_input == "4":
+        transfer_funds()
+    if user_input == "5":
         print("=-=-=Budgets=-=-=")
         for budget in budgets:
             print(budget.name)
@@ -95,6 +118,7 @@ while user_input != "0":
         '1 - Check available funds of each budget \n'
         '2 - Add funds to a budget \n'
         '3 - Remove funds from a budget \n'
-        '4 - List budgets \n'
-        '5 - View history of fund allocations\n'
+        '4 - Transfer funds between budgets \n'
+        '5 - List budgets \n'
+        '6 - View history of fund allocations\n'
         '0 - Stop program')
