@@ -1,7 +1,11 @@
+import time
+
+
 class BudgetClass:
     def __init__(self, name):
         self.name = name
         self.balance = 0
+        budgets.append(self)
 
     def add_money(self, money):
         self.balance = money
@@ -26,10 +30,71 @@ class BudgetClass:
                 receiving_budget.balance += amount
 
 
-print('This program allows you to manage funds between the budgets of food, clothing, entertainment, and travel.\n'
-      'Please choose from the options below \n'
-      '1 - Check available funds of each budget \n'
-      '2 - Add funds to a budget \n'
-      '3 - Remove funds from a budget \n'
-      '4 - View history of fund allocations\n'
-      '0 - Stop program')
+def check_funds():
+    choice = input("Which budget would you like to check?")
+    for budget in budgets:
+        if budget.name == choice:
+            return print("{}: ${}".format(budget.name, budget.balance))
+    print("Cannot find budget with that name!")
+
+
+def add_funds():
+    choice = input("Which budget would you like to add to?")
+    money_to_add = input("How much do you want to add?")
+    for budget in budgets:
+        if budget.name == choice:
+            budget.add_money(int(money_to_add))
+            return print("Updated balance of {}: ${}".format(budget.name, budget.balance))
+    print("Cannot find budget with that name!")
+
+
+def remove_funds():
+    choice = input("Which budget would you like to deduct from?")
+    money_to_add = input("How much do you want to remove?")
+    for budget in budgets:
+        if budget.name == choice:
+            budget.add_money(-int(money_to_add))
+            return print("Updated balance of {}: ${}".format(budget.name, budget.balance))
+    print("Cannot find budget with that name!")
+
+
+# setup budgets and a list to store them
+budgets = []
+food_budget = BudgetClass("food")
+clothing_budget = BudgetClass("clothes")
+entertainment = BudgetClass("entertainment")
+
+user_input = input(
+    'This program allows you to manage funds between the budgets of food, clothing, entertainment, and travel.\n'
+    'Please choose from the options below \n'
+    '1 - Check available funds of each budget \n'
+    '2 - Add funds to a budget \n'
+    '3 - Remove funds from a budget \n'
+    '4 - List budgets \n'
+    '5 - View history of fund allocations\n'
+    '0 - Stop program')
+
+# wait for input
+while user_input != "0":
+    if user_input == "1":
+        check_funds()
+    if user_input == "2":
+        add_funds()
+    if user_input == "3":
+        remove_funds()
+    if user_input == "4":
+        print("=-=-=Budgets=-=-=")
+        for budget in budgets:
+            print(budget.name)
+    if user_input == "5":
+        print("TODO view history")
+
+    # wait then ask for input again
+    time.sleep(2)
+    user_input = input(
+        '1 - Check available funds of each budget \n'
+        '2 - Add funds to a budget \n'
+        '3 - Remove funds from a budget \n'
+        '4 - List budgets \n'
+        '5 - View history of fund allocations\n'
+        '0 - Stop program')
