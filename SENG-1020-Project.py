@@ -75,6 +75,8 @@ def transfer_funds():
                         i.transfer_bal(int(money_to_transfer), j)
                     except ValueError:
                         print("Not a valid dollar amount.")
+                    return print("Updated balance of {}: ${} \n"
+                                 "Updated balance of {}: ${}".format(j.name, j.balance, i.name, i.balance))
     print("Cannot find budget with that name!")
 
 
